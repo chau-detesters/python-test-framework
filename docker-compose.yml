@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  test-runner:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=docker
+      - API_BASE_URL=https://jsonplaceholder.typicode.com
+      - PARALLEL_WORKERS=4
+    volumes:
+      - ./reports:/app/reports
+      - ./src:/app/src
+      - ./tests:/app/tests
+    command: >
+      pytest \
+        --html=reports/report.html \
+        --json-report --json-report-file=reports/report.json \
+        --cov=src --cov-report=html --cov-report=xml \
+        -n auto \
+        -v 
