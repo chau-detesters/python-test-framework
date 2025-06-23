@@ -1,0 +1,48 @@
+name: Test Automation Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+        test-suite: [smoke, regression, integration]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run ${{ matrix.test-suite }} tests
+        run: |
+          pytest -m ${{ matrix.test-suite }} \
+                 --html=reports/report-${{ matrix.test-suite }}.html \
+                 --json-report --json-report-file=reports/report-${{ matrix.test-suite }}.json \
+                 --cov=src --cov-report=xml \
+                 --maxfail=5 \
+                 -n auto
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+          path: reports/report-${{ matrix.test-suite }}.html
+      - name: Upload JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: json-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+          path: reports/report-${{ matrix.test-suite }}.json
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+          path: reports/ 
