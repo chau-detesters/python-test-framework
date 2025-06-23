@@ -37,8 +37,23 @@ jobs:
                --cov=src --cov-report=xml \
                --maxfail=5 \
                -n auto
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+        path: reports/report-${{ matrix.test-suite }}.html
+    - name: Upload JSON report
+      uses: actions/upload-artifact@v4
+      with:
+        name: json-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+        path: reports/report-${{ matrix.test-suite }}.json
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-${{ matrix.python-version }}-${{ matrix.test-suite }}
+        path: reports/
     - name: Upload test reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-reports-${{ matrix.python-version }}-${{ matrix.test-suite }}
