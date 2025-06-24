@@ -8,8 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
-venv/
 build/
 develop-eggs/
 dist/
@@ -25,6 +23,50 @@ var/
 .installed.cfg
 *.egg
 
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Pytest
+.pytest_cache/
+.cache/
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+
+# Pact output
+pact/
+pacts/
+*.json
+
+# Logs and reports
+log/
+logs/
+*.log
+reports/
+report.html
+
+# MacOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Docker
+docker/
+docker-compose.yml
+
+# Jupyter
+.ipynb_checkpoints
+
+# Misc
+*.swp
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
@@ -39,17 +81,10 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .nox/
-.coverage
 .coverage.*
-.cache
 nosetests.xml
-coverage.xml
 *.cover
-.hypothesis/
 .pytest_cache/
-
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # pyenv
 .python-version
@@ -62,21 +97,15 @@ coverage.xml
 .pyre/
 
 # Reports
-reports/
 *.html
-*.json
 *.xml
 
 # Docker
 *.log
 docker-compose.override.yml
 
-# VSCode
-.vscode/
-
 # Mac
 .DS_Store
 
 # Other
-*.swp
 *~ 

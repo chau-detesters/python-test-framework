@@ -1,26 +1,26 @@
 # environment_configs.py - Configuration per environment
 """
-Bevat configuraties voor verschillende testomgevingen (development, staging, production, etc).
+Contains configurations for different test environments (development, staging, production, etc).
 """
 import os
 from enum import Enum
 from dataclasses import dataclass
 
 class Environment(Enum):
-    """Enum voor verschillende testomgevingen."""
+    """Enum for different test environments."""
     DEV = "dev"
     STAGING = "staging"
     PROD = "prod"
 
 @dataclass
 class EnvironmentConfig:
-    """Configuratie voor een specifieke testomgeving."""
+    """Configuration for a specific test environment."""
     base_url: str
     timeout: int
 
     @property
     def is_production(self):
-        """Geeft True als de omgeving productie is."""
+        """Returns True if the environment is production."""
         return self.base_url == "https://api.example.com"
 
 ENVIRONMENT_CONFIGS = {
@@ -30,6 +30,6 @@ ENVIRONMENT_CONFIGS = {
 }
 
 def get_environment_config(env_name: str) -> EnvironmentConfig:
-    """Haal de configuratie op voor een gegeven omgevingsnaam."""
+    """Get the configuration for a given environment name."""
     env = Environment(env_name)
     return ENVIRONMENT_CONFIGS[env] 

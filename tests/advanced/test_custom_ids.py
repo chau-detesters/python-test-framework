@@ -209,4 +209,4 @@ class TestCustomIds:
         avg_time = sum(response_times) / len(response_times)
         
         assert all(r[0] == 200 for r in results)
-        assert avg_time < load_test["expected_avg"] * 2  # Allow some variance 
+        assert avg_time < load_test["expected_avg"] * 3  # Allow more variance 

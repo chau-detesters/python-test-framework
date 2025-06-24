@@ -1,9 +1,9 @@
 # Modern Python Test Automation Framework
-# Dag 1 Starter Project
+# Day 1 Starter Project
 
 """
-Hoofdmodule van het Python API testframework.
-Bevat kernlogica voor testuitvoering, data loading, validatie, en utilities.
+Main module of the Python API test framework.
+Contains core logic for test execution, data loading, validation, and utilities.
 """
 
 # requirements.txt
@@ -23,30 +23,30 @@ from faker import Faker
 
 @pytest.fixture(scope="session")
 def fake():
-    """Faker instance voor testdata generatie"""
+    """Faker instance for test data generation"""
     return Faker()
 
 @pytest.fixture(scope="session") 
 def base_url():
-    """Base URL voor API testing"""
+    """Base URL for API testing"""
     return "https://jsonplaceholder.typicode.com"
 
 @pytest.fixture
 async def http_client(base_url):
-    """Async HTTP client voor API calls"""
+    """Async HTTP client for API calls"""
     async with httpx.AsyncClient(base_url=base_url, timeout=10.0) as client:
         yield client
 
 @pytest.fixture
 def sample_user_data(fake):
-    """Generate sample user data voor testing"""
+    """Generate sample user data for testing"""
     return {
         "name": fake.name(),
         "email": fake.email(),
         "username": fake.user_name()
     }
 
-# test_api_basics.py - Basis API tests
+# test_api_basics.py - Basic API tests
 import pytest
 import httpx
 from pydantic import BaseModel, ValidationError
@@ -67,20 +67,20 @@ class Post(BaseModel):
 class TestUsersAPI:
     
     async def test_get_all_users(self, http_client):
-        """Test het ophalen van alle users"""
+        """Test retrieving all users"""
         response = await http_client.get("/users")
         
         assert response.status_code == 200
         users_data = response.json()
         assert len(users_data) > 0
         
-        # Valideer eerste user met Pydantic
+        # Validate first user with Pydantic
         first_user = User(**users_data[0])
         assert first_user.id > 0
         assert "@" in first_user.email
 
     async def test_get_single_user(self, http_client):
-        """Test het ophalen van een specifieke user"""
+        """Test retrieving a specific user"""
         user_id = 1
         response = await http_client.get(f"/users/{user_id}")
         
@@ -92,7 +92,7 @@ class TestUsersAPI:
 
     @pytest.mark.parametrize("user_id", [1, 2, 3, 5, 10])
     async def test_multiple_users(self, http_client, user_id):
-        """Test meerdere user IDs met parametrized testing"""
+        """Test multiple user IDs with parametrized testing"""
         response = await http_client.get(f"/users/{user_id}")
         
         assert response.status_code == 200
@@ -108,23 +108,23 @@ class TestUsersAPI:
 class TestPostsAPI:
     
     async def test_get_posts_for_user(self, http_client):
-        """Test posts van een specifieke user"""
+        """Test posts of a specific user"""
         user_id = 1
         response = await http_client.get(f"/posts?userId={user_id}")
         
         assert response.status_code == 200
         posts = response.json()
         
-        # Valideer dat alle posts van de juiste user zijn
+        # Validate that all posts belong to the correct user
         for post_data in posts:
             post = Post(**post_data)
             assert post.userId == user_id
 
     async def test_create_post(self, http_client, sample_user_data):
-        """Test het aanmaken van een nieuwe post"""
+        """Test creating a new post"""
         new_post = {
             "title": "Test Post",
-            "body": "Dit is een test post body",
+            "body": "This is a test post body",
             "userId": 1
         }
         
@@ -144,7 +144,7 @@ import httpx
 class TestPerformance:
     
     async def test_response_time_under_threshold(self, http_client):
-        """Test dat API responses binnen acceptabele tijd zijn"""
+        """Test that API responses are within acceptable time"""
         start_time = time.time()
         response = await http_client.get("/users")
         end_time = time.time()
@@ -156,7 +156,7 @@ class TestPerformance:
 
     @pytest.mark.parametrize("endpoint", ["/users", "/posts", "/albums"])
     async def test_multiple_endpoints_performance(self, http_client, endpoint):
-        """Test performance van verschillende endpoints"""
+        """Test performance of different endpoints"""
         start_time = time.time()
         response = await http_client.get(endpoint)
         end_time = time.time()
@@ -166,7 +166,7 @@ class TestPerformance:
         assert response.status_code == 200
         assert response_time < 3.0
 
-# pytest.ini - Pytest configuratie
+# pytest.ini - Pytest configuration
 """
 [tool:pytest]
 asyncio_mode = auto

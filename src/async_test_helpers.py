@@ -4,7 +4,7 @@ from typing import Callable, Any, List, Dict
 from contextlib import asynccontextmanager
 
 """
-Helperfuncties voor asynchrone tests: wachten op condities, retries, performance meten.
+Helper functions for asynchronous tests: waiting for conditions, retries, performance measurement.
 """
 
 class AsyncTestHelper:
@@ -16,7 +16,7 @@ class AsyncTestHelper:
         timeout: float = 10.0,
         interval: float = 0.1
     ) -> bool:
-        """Wacht asynchroon tot een conditie True is of timeout bereikt is."""
+        """Wait asynchronously until a condition is True or timeout is reached."""
         start_time = time.time()
         
         while time.time() - start_time < timeout:
@@ -33,7 +33,7 @@ class AsyncTestHelper:
         delay: float = 1.0,
         backoff_factor: float = 2.0
     ) -> Any:
-        """Voer een async functie uit met retries en exponential backoff."""
+        """Execute an async function with retries and exponential backoff."""
         last_exception = None
         
         for attempt in range(max_retries):
@@ -48,7 +48,7 @@ class AsyncTestHelper:
     
     @staticmethod
     async def measure_async_performance(func: Callable, *args, **kwargs) -> Dict[str, Any]:
-        """Meet de wall time en CPU tijd van een async functie-uitvoering."""
+        """Measure the wall time and CPU time of an async function execution."""
         start_time = time.time()
         start_cpu = time.process_time()
         

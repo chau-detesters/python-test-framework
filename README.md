@@ -1,4 +1,4 @@
-[![Test Automation Pipeline](https://github.com/chaunguyen/python-test-framework/actions/workflows/tests.yml/badge.svg)](https://github.com/chaunguyen/python-test-framework/actions/workflows/tests.yml)
+[![Test Automation Pipeline](https://github.com/chaunguyen/python-test-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/chaunguyen/python-test-framework/actions/workflows/ci.yml)
 
 # Python Test Framework
 
@@ -11,15 +11,15 @@ A modern, enterprise-ready Python test framework for API and backend testing. Su
 ```
 python-test-framework/
 │
-├── src/                        # Production code (clients, helpers, config)
+├── consumer/                  # Consumer-side service code
 │   ├── __init__.py
-│   ├── async_client.py
-│   ├── async_test_helpers.py
-│   ├── environment_configs.py
-│   ├── config.py
-│   └── python_test_framework.py
+│   └── service.py
 │
-├── tests/                      # All test files and fixtures
+├── provider/                  # Provider-side service code
+│   ├── __init__.py
+│   └── service.py
+│
+├── tests/                     # All test files and fixtures
 │   ├── __init__.py
 │   ├── conftest.py             # Shared test fixtures
 │   ├── conftest_async.py       # Async testfixtures
@@ -48,21 +48,18 @@ python-test-framework/
 │   ├── pytest_enterprise_plugin.py  # Enterprise plugin (markers, hooks)
 │   └── test_enterprise_patterns.py  # Enterprise test examples
 │
-├── data/                       # Testdata en JSON-bestanden
-│   └── test_data.json
+├── pacts/                     # Generated Pact contract files
 │
-├── reports/                    # Test and coverage reports
-│   ├── report.html
-│   └── custom_report.html
+├── scripts/                   # Utility and workflow scripts
+│   └── run_pact_tests.py
 │
-├── docker/                     # Dockerfile voor testomgeving
-│   └── Dockerfile              # Docker test runner
-│
-├── requirements.txt            # Python dependencies
-├── pytest.ini                  # Pytest configuration
-├── docker-compose.yml          # Docker Compose for local test runs
-└── Makefile                    # Handy test/lint/CI commands
-└── README.md
+├── requirements.txt           # Python dependencies
+├── pytest.ini                 # Pytest configuration
+├── .github/                   # GitHub Actions workflows
+│   └── workflows/
+│       └── ci.yml
+├── README.md                  # Project documentation
+└── ... (other config files)
 ```
 
 ---
@@ -87,7 +84,7 @@ make docker-test
 
 ### GitHub Actions (CI/CD)
 - Tests run automatically on push, PR, and daily schedule.
-- See `.github/workflows/tests.yml` for details.
+- See `.github/workflows/ci.yml` for details.
 
 ---
 
@@ -213,4 +210,3 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
-# trigger workflow

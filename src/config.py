@@ -1,6 +1,6 @@
 # config.py - Centralized configuration management
 """
-Globale configuratie voor het testframework (paden, settings, etc).
+Global configuration for the test framework (paths, settings, etc).
 """
 import os
 from dataclasses import dataclass
@@ -18,7 +18,7 @@ class TestConfig:
     
     @classmethod
     def from_env(cls):
-        """Maak een TestConfig aan op basis van environment variables."""
+        """Create a TestConfig based on environment variables."""
         return cls(
             base_url=os.getenv("TEST_BASE_URL", "https://jsonplaceholder.typicode.com"),
             timeout=int(os.getenv("TEST_TIMEOUT", "10")),

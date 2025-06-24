@@ -1,16 +1,16 @@
 """
-Unittests voor async helperfuncties: retries, timeouts, async utilities.
+Unittests for async helper functions: retries, timeouts, async utilities.
 """
 import pytest
 import time
 
 def async_parametrize(*args, **kwargs):
-    """Custom parametrize decorator voor async tests."""
+    """Custom parametrize decorator for async tests."""
     return pytest.mark.parametrize(*args, **kwargs)
 
 # Performance testing decorator
 def performance_test(max_time: float = 5.0):
-    """Decorator voor performance testing van async functies."""
+    """Decorator for performance testing of async functions."""
     def decorator(func):
         @pytest.mark.asyncio
         async def wrapper(*args, **kwargs):

@@ -1,66 +1,66 @@
 # README.md
 
 """
-Deze map bevat alle tests voor het framework, gestructureerd naar type:
+This folder contains all tests for the framework, structured by type:
 - unit/: Unit tests
-- integration/: Integratietests
-- performance/: Performance- en loadtests
-- async/: Asynchrone tests
+- integration/: Integration tests
+- performance/: Performance and load tests
+- async/: Asynchronous tests
 - data_driven/: Data-driven tests
-- advanced/: Geavanceerde patronen en scenario's
-- data/: Testdata (JSON)
+- advanced/: Advanced patterns and scenarios
+- data/: Test data (JSON)
 """
 
-# Teststructuur
+# Test Structure
 
-Deze map bevat alle tests voor het project, logisch gescheiden per type.
+This folder contains all tests for the project, logically separated by type.
 
 ## Subfolders
 
-- **unit/**: Kleine, snelle unittests van losse functies/classes.
-- **integration/**: Integratie- en end-to-end tests, vaak met echte afhankelijkheden of mocks.
-- **performance/**: Alle performance- en loadtests, inclusief async en rate limiting.
-- **async/**: Async/mocking/timeout tests, inclusief respx en semaphores.
-- **data_driven/**: Data-gedreven en parametrische tests, vaak met veel scenario's.
-- **advanced/**: Geavanceerde patronen, custom ID's, complexe parametrisatie.
+- **unit/**: Small, fast unit tests for individual functions/classes.
+- **integration/**: Integration and end-to-end tests, often with real dependencies or mocks.
+- **performance/**: All performance and load tests, including async and rate limiting.
+- **async/**: Async/mocking/timeout tests, including respx and semaphores.
+- **data_driven/**: Data-driven and parametric tests, often with many scenarios.
+- **advanced/**: Advanced patterns, custom IDs, complex parametrization.
 
-## Algemene bestanden
-- `conftest.py`, `conftest_async.py`: Fixtures en testconfiguratie
-- `helper_functions.py`: Herbruikbare testhelpers
+## General files
+- `conftest.py`, `conftest_async.py`: Fixtures and test configuration
+- `helper_functions.py`: Reusable test helpers
 
-## Voorbeelden: Alleen een bepaalde testgroep draaien
+## Examples: Running only a specific test group
 
-Alleen unittests:
+Only unit tests:
 ```
 pytest tests/unit
 ```
 
-Alleen integratietests:
+Only integration tests:
 ```
 pytest tests/integration
 ```
 
-Alleen performance tests:
+Only performance tests:
 ```
 pytest tests/performance
 ```
 
-Alle async/mocking tests:
+Only async/mocking tests:
 ```
 pytest tests/async
 ```
 
-Alle data-driven tests:
+Only data-driven tests:
 ```
 pytest tests/data_driven
 ```
 
-Alle advanced tests:
+Only advanced tests:
 ```
 pytest tests/advanced
 ```
 
 ## Best practice
-- Houd nieuwe tests bij in de juiste subfolder.
-- Gebruik duidelijke namen en docstrings.
-- Gebruik parametrisatie en fixtures voor herbruikbaarheid. 
+- Keep new tests in the correct subfolder.
+- Use clear names and docstrings.
+- Use parametrization and fixtures for reusability. 
