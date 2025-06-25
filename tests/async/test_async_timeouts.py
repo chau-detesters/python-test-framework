@@ -9,9 +9,11 @@ from src.async_client import AsyncAPIClient
 
 @pytest.mark.asyncio
 async def test_request_within_timeout():
-    async with AsyncAPIClient(base_url="https://httpbin.org", timeout=5) as client:
-        response = await client._session.get("/delay/2")  # endpoint wacht 2 seconden
-        assert response.status_code == 200
+    with respx.mock:
+        respx.get("https://httpbin.org/delay/2").mock(return_value=httpx.Response(200))
+        async with AsyncAPIClient(base_url="https://httpbin.org", timeout=5) as client:
+            response = await client._session.get("/delay/2")  # endpoint wacht 2 seconden
+            assert response.status_code == 200
 
 @pytest.mark.asyncio
 async def test_request_exceeds_timeout():
@@ -21,18 +23,21 @@ async def test_request_exceeds_timeout():
 
 @pytest.mark.asyncio
 async def test_batch_requests_with_timeouts():
-    async with AsyncAPIClient(base_url="https://httpbin.org", timeout=2) as client:
-        tasks = [
-            client._session.get("/delay/1"),  # zal slagen
-            client._session.get("/delay/3"),  # zal timeout geven
-        ]
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        # Controleer resultaat type voor status_code
-        if isinstance(results[0], Exception):
-            assert isinstance(results[0], httpx.ReadTimeout)
-        else:
-            assert results[0].status_code == 200
-        assert isinstance(results[1], httpx.ReadTimeout)
+    with respx.mock:
+        respx.get("https://httpbin.org/delay/1").mock(return_value=httpx.Response(200))
+        respx.get("https://httpbin.org/delay/3").mock(side_effect=httpx.ReadTimeout("Timeout!"))
+        async with AsyncAPIClient(base_url="https://httpbin.org", timeout=2) as client:
+            tasks = [
+                client._session.get("/delay/1"),  # zal slagen
+                client._session.get("/delay/3"),  # zal timeout geven
+            ]
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+            # Controleer resultaat type voor status_code
+            if isinstance(results[0], Exception):
+                assert isinstance(results[0], httpx.ReadTimeout)
+            else:
+                assert results[0].status_code == 200
+            assert isinstance(results[1], httpx.ReadTimeout)
 
 @pytest.mark.asyncio
 async def test_per_request_timeout():

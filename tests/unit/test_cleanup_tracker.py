@@ -7,6 +7,7 @@ from typing import Dict, Any, List
 
 class TestCleanupTracker:
     
+    @pytest.mark.asyncio
     async def test_basic_cleanup_tracking(self, cleanup_tracker, user_factory, post_factory):
         """Test basis cleanup tracking functionality"""
         # Make test resources
@@ -25,6 +26,7 @@ class TestCleanupTracker:
         
         print(f"Test: Created user {user['id']} and post {post['id']}")
 
+    @pytest.mark.asyncio
     async def test_multiple_resources_tracking(self, cleanup_tracker, user_factory, post_factory):
         """Test tracking of multiple resources"""
         # Make multiple resources
@@ -43,6 +45,7 @@ class TestCleanupTracker:
         
         print(f"Test: Tracked {len(users)} users and {len(posts)} posts")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_isolation(self, cleanup_tracker):
         """Test that cleanup_tracker is isolated per test"""
         # Each test gets a new cleanup_tracker
@@ -57,6 +60,7 @@ class TestCleanupTracker:
         assert len(cleanup_tracker["users"]) == 1
         assert len(cleanup_tracker["posts"]) == 1
 
+    @pytest.mark.asyncio
     async def test_cleanup_with_api_calls(self, cleanup_tracker, http_client, user_factory, post_factory):
         """Test cleanup tracking with real API calls"""
         # Make user via API
@@ -91,6 +95,7 @@ class TestCleanupTracker:
         else:
             print("User creation failed (expected for JSONPlaceholder)")
 
+    @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_count", [1, 3, 5])
     async def test_cleanup_tracker_scaling(self, cleanup_tracker, user_factory, resource_count):
         """Test cleanup tracker with different amounts of resources"""
@@ -106,6 +111,7 @@ class TestCleanupTracker:
         
         print(f"Test: Tracked {resource_count} users for cleanup")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_with_comments(self, cleanup_tracker, comment_factory):
         """Test cleanup tracking with comments"""
         # Add comment tracking to cleanup_tracker
@@ -123,6 +129,7 @@ class TestCleanupTracker:
         
         print(f"Test: Tracked {len(comments)} comments for cleanup")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_error_handling(self, cleanup_tracker):
         """Test cleanup tracker with error handling"""
         try:
@@ -136,6 +143,7 @@ class TestCleanupTracker:
         # Verify that cleanup tracker still works
         assert len(cleanup_tracker["users"]) == 1
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_nested_resources(self, cleanup_tracker, user_factory, post_factory, comment_factory):
         """Test cleanup tracking with nested resources (user -> posts -> comments)"""
         # Make user
@@ -164,6 +172,7 @@ class TestCleanupTracker:
         print(f"Test: Tracked nested resources - {len(cleanup_tracker['users'])} users, "
               f"{len(cleanup_tracker['posts'])} posts, {len(cleanup_tracker['comments'])} comments")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_duplicate_prevention(self, cleanup_tracker, user_factory):
         """Test that cleanup tracker prevents duplicates"""
         user = user_factory.create_user()
@@ -179,6 +188,7 @@ class TestCleanupTracker:
         
         print(f"Test: Added user {user_id} multiple times to cleanup tracker")
 
+    @pytest.mark.asyncio
     async def test_enhanced_cleanup_tracker_functionality(self, cleanup_tracker, user_factory, post_factory, comment_factory):
         """Test enhanced cleanup tracker with helper methods"""
         # Use the new add_resource helper method
@@ -210,6 +220,7 @@ class TestCleanupTracker:
         print(f"Test: Enhanced tracker - users: {user_count}, posts: {post_count}, "
               f"comments: {comment_count}, total: {total_count}")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_custom_resource_types(self, cleanup_tracker):
         """Test cleanup tracker with custom resource types"""
         # Use the new add_resource method for custom types
@@ -233,6 +244,7 @@ class TestCleanupTracker:
         print(f"Test: Custom resources - albums: {album_count}, photos: {photo_count}, "
               f"todos: {todo_count}, total: {total_count}")
 
+    @pytest.mark.asyncio
     async def test_cleanup_tracker_complex_scenario(self, cleanup_tracker, user_factory, post_factory, comment_factory):
         """Test cleanup tracker with complex scenario"""
         # Make a complex test setup
