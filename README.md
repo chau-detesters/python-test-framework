@@ -6,7 +6,28 @@ A modern, enterprise-ready Python test framework for API and backend testing. Su
 
 ---
 
-## 📁 Project Structure
+## 🐣 Prerequisites
+
+- Python 3.9 or higher (check with `python3 --version`)
+- [Docker](https://docs.docker.com/get-docker/) (for Docker-based runs)
+- `make` utility (pre-installed on Mac/Linux; for Windows, use WSL or Git Bash)
+
+---
+
+## 🏁 Setup
+
+```bash
+# (Recommended) Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+make install
+```
+
+---
+
+## �� Project Structure
 
 ```
 python-test-framework/
@@ -73,6 +94,12 @@ make test            # Run all tests
 make smoke           # Run smoke tests
 make parallel        # Run tests in parallel
 make coverage        # Generate coverage report
+make help            # Show all available make commands
+```
+
+### Run a Single Test
+```bash
+pytest tests/test_api_basics.py::test_some_function
 ```
 
 ### Docker
@@ -85,6 +112,16 @@ make docker-test
 ### GitHub Actions (CI/CD)
 - Tests run automatically on push, PR, and daily schedule.
 - See `.github/workflows/ci.yml` for details.
+
+---
+
+## 🛠️ Troubleshooting
+
+- **Python not found?** Install Python 3.9+ from [python.org](https://www.python.org/downloads/).
+- **make: command not found?** On Windows, use WSL or Git Bash, or run the commands in the Makefile manually.
+- **Docker issues?** Make sure Docker Desktop is running. See [Docker install guide](https://docs.docker.com/get-docker/).
+- **Permission errors?** Try running with `sudo` (Linux/Mac) or as Administrator (Windows).
+- **Still stuck?** Open an issue on GitHub for help!
 
 ---
 
