@@ -14,6 +14,17 @@ A modern, enterprise-ready Python test framework for API and backend testing. Su
 
 ---
 
+## ⚠️ Compatibility & Async Test Support
+
+- **pytest**: The framework is tested and stable with `pytest==7.4.x` and `pytest-asyncio==0.21.x`.
+- **pytest 8.x is NOT supported** due to incompatibility with `pytest-asyncio` (as of June 2024). Using pytest 8.x will cause async and fixture errors (e.g., `'FixtureDef' object has no attribute 'unittest'`).
+- If you see errors about async tests or fixture setup, ensure you are using the correct versions:
+  - `pytest==7.4.3` (or `7.4.4`)
+  - `pytest-asyncio==0.21.1`
+- See `requirements.txt` for all pinned dependencies.
+
+---
+
 ## 🏁 Setup
 
 ```bash
@@ -21,13 +32,13 @@ A modern, enterprise-ready Python test framework for API and backend testing. Su
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
-make install
+# Install dependencies (with correct versions)
+pip install -r requirements.txt
 ```
 
 ---
 
-## �� Project Structure
+##  Project Structure
 
 ```
 python-test-framework/
